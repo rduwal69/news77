@@ -1,0 +1,43 @@
+.navbar .navbar-brand {
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 1rem;
+    font-weight: 800;
+}
+
+.navbar .navbar-brand:hover {
+    background-color: black;
+    color: white;
+}
+
+.navbar .navbar-nav {
+    margin-right: 1rem;
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+    font-weight: 600;
+}
+
+.navbar .navbar-nav .nav-item .nav-link:hover {
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+}
+
+@media (min-width: 992px) {
+    .navbar .navbar-brand {
+        margin-left: 4rem;
+    }
+    .navbar .navbar-nav {
+        margin-right: 7rem;
+    }
+}
+
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+
+}
+
+
