@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import React from 'react'
 import Navbar from './components/Navbar'
 
@@ -8,7 +8,7 @@ import TopNews from './pages/TopNews'
 import RecentNews from './pages/RecentNews'
 import About from './pages/About'
 import ContactUs from './pages/ContactUs'
-import NewsDetailPage from "./pages/NewsDetailPage";
+import NewsDetail from "./components/NewsDetail";
 
 
 const App = () => {
@@ -22,8 +22,7 @@ const App = () => {
           <Route path="/recent-news" element={<RecentNews />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/newsdetail/:newtitle" element={<NewsDetailPage />} />
-
+          <Route path={`news/:id`} element={<NewsDetail />} />
         </Routes>
       </Router>
     </div>

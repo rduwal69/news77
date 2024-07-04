@@ -45,6 +45,7 @@ const News = () => {
           {news.map((article, index) => (
             <div className="col-12 col-sm-6 col-md-4 mb-3" key={index}>
               <NewsItem
+                id={article.id}
                 title={article.title || "No Title"}
                 description={article.description || "No Description"}
                 imageUrl={article.urlToImage || "https://via.placeholder.com/150"}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 
-const NewsItem = ({ imageUrl, title, description }) => {
+const NewsItem = ({id,imageUrl, title, description }) => {
     const [showFullDescription, setShowFullDescription] = useState(false);
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
@@ -33,16 +33,6 @@ const NewsItem = ({ imageUrl, title, description }) => {
         }
     };
 
-    const generateSlug = (text) => {
-        return text.toString().toLowerCase().trim()
-            .replace(/\s+/g, '-')           // Replace spaces with -
-            .replace(/[^\w-]+/g, '')        // Remove all non-word chars
-            .replace(/--+/g, '-')           // Replace multiple - with single -
-            .replace(/^-+|-+$/g, '');       // Trim - from start and end of text
-    };
-
-    const newtitle = generateSlug(title);
-
     return (
         <div className='container'>
             <div className="card h-100" style={{ width: '18rem' }}>
@@ -50,7 +40,7 @@ const NewsItem = ({ imageUrl, title, description }) => {
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
                     <p className="card-text">{renderDescription()}</p>
-                    <Link to={`newsdetail/${newtitle}`} type="button" className="btn btn-dark btn-sm">Read More</Link>
+                    <Link to={`news/${id}`} type="button" className="btn btn-dark btn-sm">Read More</Link>
                 </div>
             </div>
         </div>
