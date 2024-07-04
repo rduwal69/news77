@@ -17,7 +17,6 @@ const NewsDetail = ({ title, description, imageUrl }) => {
                 }
 
                 const data = await response.json();
-                console.log(data);
 
                 const article = data.articles.find(article => article.id === parseInt(id));
 
