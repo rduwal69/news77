@@ -1,3 +1,14 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+body {
+    padding-top: 60px;
+}
+
 .navbar .navbar-brand {
     padding: 10px;
     border-radius: 10px;
@@ -6,7 +17,7 @@
 }
 
 .navbar .navbar-brand:hover {
-    background-color: black;
+    background-color: 	#3a4664;
     color: white;
 }
 
@@ -19,25 +30,22 @@
 }
 
 .navbar .navbar-nav .nav-item .nav-link:hover {
-    background-color: black;
+    background-color: 	#3a4664;
     color: white;
-    border-radius: 10px;
 }
 
 @media (min-width: 992px) {
     .navbar .navbar-brand {
         margin-left: 4rem;
     }
+
     .navbar .navbar-nav {
         margin-right: 7rem;
     }
 }
 
-.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
-    background-color: black;
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+    background-color: 	#3a4664;
     color: white;
-    border-radius: 10px;
-
 }
-
-

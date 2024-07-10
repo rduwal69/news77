@@ -15,6 +15,15 @@ const Navbar = () => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/">Home</NavLink>
                         </li>
+                        <li className="nav-item dropdown">
+                            <NavLink className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Category
+                            </NavLink>
+                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><NavLink className="dropdown-item" to="category/politics">Politics</NavLink></li>
+                                <li><NavLink className="dropdown-item" to="category/sport">Sport</NavLink></li>
+                            </ul>
+                        </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="top-news">Top News</NavLink>
                         </li>

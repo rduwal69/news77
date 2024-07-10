@@ -2,7 +2,7 @@ import React from 'react'
 
 const TopNews = () => {
   return (
-    <div>
+    <div className='container my-3'>
       "Top News"
     </div>
   )

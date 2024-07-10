@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const NewsDetail = ({ title, description, imageUrl }) => {
+const NewsDetail = () => {
     const [newsDetail, setNewsDetail] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
     const { id } = useParams();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { from } = location.state || { from: { pathname: "/" } };
+
+    const goBack = () => {
+        navigate(from);
+    };
 
     useEffect(() => {
         const fetchNewsDetail = async () => {
             try {
-                const response = await fetch(`/article.json`);
+                const response = await fetch(`http://localhost:5000/articles/${id}`);
 
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -18,10 +27,8 @@ const NewsDetail = ({ title, description, imageUrl }) => {
 
                 const data = await response.json();
 
-                const article = data.articles.find(article => article.id === parseInt(id));
-
-                if (article) {
-                    setNewsDetail(article);
+                if (data) {
+                    setNewsDetail(data);
                 } else {
                     throw new Error('Article not found');
                 }
@@ -45,20 +52,36 @@ const NewsDetail = ({ title, description, imageUrl }) => {
         return <div>Error: {error}</div>;
     }
 
-    if (!newsDetail) {
-        return <div>No news detail found</div>;
-    }
+    const handelDelete = async () => {
+        if (confirm("Are you sure?")) {
+            const response = await fetch(`http://localhost:5000/articles/${id}`, {
+                method: 'DELETE',
+            });
+            toast.success("Delete Successfully");
+            return navigate('/');
+        }
 
+    }
     return (
         <div>
-            <div className="container">
+            <div className="container d-flex gap-3 ">
                 <div className="col-md-6 my-5">
                     <div className="card p-3">
                         <h1 className="card-title">{newsDetail.title}</h1>
                         <img src={newsDetail.urlToImage} className="card-img-top" alt="News Detail" />
                         <div className="card-body">
                             <p className="card-text">{newsDetail.description}</p>
-                            <Link to="/" className="btn btn-dark">Back</Link>
+                            <button onClick={goBack} className="btn btn-dark">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-6 my-5 ">
+                    <div className="card p-3 d-flex">
+                        <h6 className="card-title text-center">Author Name: {newsDetail.author}</h6>
+                        <div className="card-body text-center">
+                            <p className="card-text"><span>Source: </span>{newsDetail.url}</p>
+                            <button onClick={handelDelete} className="btn btn-danger btn-sm col-md-6">Delete</button>
                         </div>
                     </div>
                 </div>

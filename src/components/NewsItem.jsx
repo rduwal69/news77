@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const NewsItem = ({id,imageUrl, title, description }) => {
+const NewsItem = ({id, category, imageUrl, title, description }) => {
+    const location = useLocation();
+
     const [showFullDescription, setShowFullDescription] = useState(false);
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
@@ -40,7 +42,7 @@ const NewsItem = ({id,imageUrl, title, description }) => {
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
                     <p className="card-text">{renderDescription()}</p>
-                    <Link to={`news/${id}`} type="button" className="btn btn-dark btn-sm">Read More</Link>
+                    <Link to={`/category/${category}/${id}`} state={{ from: location }} type="button" className="btn btn-dark btn-sm">Read More</Link>
                 </div>
             </div>
         </div>
