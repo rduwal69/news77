@@ -1,13 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 const AddNewsPage = () => {
     const navigate = useNavigate();
-
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
 
     const onSubmit = async (data) => {
         if (data.urlToImage && data.urlToImage[0]) {
@@ -15,32 +13,40 @@ const AddNewsPage = () => {
             reader.onloadend = async () => {
                 const imageDataUrl = reader.result;
                 const newsData = { ...data, urlToImage: imageDataUrl };
-                const res = await fetch('http://localhost:5000/articles', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(newsData)
-                });
-                toast.success("News Added Successfully");
-                reset();
-                navigate("/addnews");
-
-            }
+                await submitNews(newsData);
+            };
             reader.readAsDataURL(data.urlToImage[0]);
+        } else {
+            const newsData = { ...data, urlToImage: null }; // Set urlToImage to null if no image is uploaded
+            await submitNews(newsData);
         }
+    };
 
-    }
+    const submitNews = async (newsData) => {
+        const res = await fetch('http://localhost:5000/articles', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newsData)
+        });
+
+        if (res.ok) {
+            toast.success("News Added Successfully");
+            reset();
+            navigate("/addnews");
+        } else {
+            toast.error("Failed to add news");
+        }
+    };
 
     return (
         <div>
             <div className='container col-md-4 my-5'>
                 <div className="card p-3">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="" style={{ color: '#007be5' }}>
-                            <div className="">
-                                <h4>Post the latest articles and headlines</h4>
-                            </div>
+                        <div style={{ color: '#007be5' }}>
+                            <h4>Post the latest articles and headlines</h4>
                         </div>
                         <div className="form-group my-3">
                             <label htmlFor="category">Select Category</label>
@@ -54,6 +60,7 @@ const AddNewsPage = () => {
                                 <option value="politics">Politics</option>
                                 <option value="sport">Sport</option>
                             </select>
+                            {errors.category && <span className="text-danger">{errors.category.message}</span>}
                         </div>
 
                         <div className="form-group my-3">
@@ -65,6 +72,7 @@ const AddNewsPage = () => {
                                 id="title"
                                 {...register('title', { required: "Title is required" })}
                             />
+                            {errors.title && <span className="text-danger">{errors.title.message}</span>}
                         </div>
 
                         <div className="form-group my-3">
@@ -87,6 +95,7 @@ const AddNewsPage = () => {
                                 rows="3"
                                 {...register('description', { required: "Description is required" })}
                             ></textarea>
+                            {errors.description && <span className="text-danger">{errors.description.message}</span>}
                         </div>
 
                         <div className="form-group my-3">
@@ -108,7 +117,6 @@ const AddNewsPage = () => {
                                 className="form-control"
                                 id="urlToImage"
                                 {...register('urlToImage')}
-
                             />
                         </div>
 
@@ -142,6 +150,6 @@ const AddNewsPage = () => {
             </div>
         </div>
     );
-}
+};
 
 export default AddNewsPage;
