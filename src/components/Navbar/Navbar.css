@@ -17,7 +17,7 @@ body {
 }
 
 .navbar .navbar-brand:hover {
-    background-color: 	#3a4664;
+    background-color: 	#007be5;;
     color: white;
 }
 
@@ -30,7 +30,7 @@ body {
 }
 
 .navbar .navbar-nav .nav-item .nav-link:hover {
-    background-color: 	#3a4664;
+    background-color: 	#007be5;;
     color: white;
 }
 
@@ -46,6 +46,6 @@ body {
 
 .navbar-nav .nav-link.active,
 .navbar-nav .nav-link.show {
-    background-color: 	#3a4664;
+    background-color: 	#007be5;
     color: white;
 }
