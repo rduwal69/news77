@@ -1,34 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-
 const AddNewsPage = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const onSubmit = async (data) => {
-        if (data.urlToImage && data.urlToImage[0]) {
-            const reader = new FileReader();
-            reader.onloadend = async () => {
-                const imageDataUrl = reader.result;
-                const newsData = { ...data, urlToImage: imageDataUrl };
-                await submitNews(newsData);
-            };
-            reader.readAsDataURL(data.urlToImage[0]);
-        } else {
-            const newsData = { ...data, urlToImage: null }; // Set urlToImage to null if no image is uploaded
-            await submitNews(newsData);
+        const formData = new FormData();
+        for (const key in data) {
+            if (key === 'urlToImage') {
+                formData.append(key, data[key][0] || "")
+            } else  {
+                formData.append(key, data[key])
+            }
         }
+        await submitNews(formData);
+
     };
 
     const submitNews = async (newsData) => {
-        const res = await fetch('http://localhost:5000/articles', {
+        const res = await fetch('http://127.0.0.1:8000/api/articles/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newsData)
+            body: newsData
         });
 
         if (res.ok) {
@@ -36,6 +30,8 @@ const AddNewsPage = () => {
             reset();
             navigate("/addnews");
         } else {
+            const errorData = await res.json();
+            console.log('Error data:', errorData);
             toast.error("Failed to add news");
         }
     };

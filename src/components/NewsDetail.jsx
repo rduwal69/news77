@@ -19,7 +19,7 @@ const NewsDetail = () => {
     useEffect(() => {
         const fetchNewsDetail = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/articles/${id}`);
+                const response = await fetch(`http://127.0.0.1:8000/api/articles/${id}`);
 
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -28,7 +28,7 @@ const NewsDetail = () => {
                 const data = await response.json();
 
                 if (data) {
-                    setNewsDetail(data);
+                    setNewsDetail(data.articles);
                 } else {
                     throw new Error('Article not found');
                 }
@@ -54,7 +54,7 @@ const NewsDetail = () => {
 
     const handelDelete = async () => {
         if (confirm("Are you sure?")) {
-            const response = await fetch(`http://localhost:5000/articles/${id}`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/articles/${id}/delete`, {
                 method: 'DELETE',
             });
             toast.success("Delete Successfully");
